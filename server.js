@@ -6,7 +6,7 @@ var bcrypt = require('bcryptjs');
 var jwt = require('jwt-simple');
 var app = express();
 
-var JWT_SECRET = 'catsmeow';
+var JWT_SECRET = 'tweetertweet';
 var db = null;
 MongoClient.connect("mongodb://localhost:27017/tweeter", function(err, dbConn){
 	if(!err){
@@ -20,30 +20,30 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 
 
-app.get('/meows', function(req, res, next){
+app.get('/tweets', function(req, res, next){
 
-	db.collection('meows', function(err, meowsCollection){
-		meowsCollection.find().toArray(function(err, meows) {
+	db.collection('tweets', function(err, meowsCollection){
+		tweetsCollection.find().toArray(function(err, meows) {
 			console.log(meows);
 			return res.json(meows);
 		});
 	});
 });
 
-app.post('/meows', function(req, res, next){
+app.post('/tweets', function(req, res, next){
 
 	var token = req.headers.authorization;
 	var user = jwt.decode(token, JWT_SECRET);
 	console.log("token = " + token);
 
-	db.collection('meows', function(err, meowsCollection){
-		var newMeow = {
+	db.collection('tweets', function(err, meowsCollection){
+		var newTweet = {
 			text: req.body.newMeow,
 			user: user._id,
 			username: user.username
 		};
 
-		meowsCollection.insert(newMeow, {w:1}, function(err) {
+		tweetsCollection.insert(newTweet, {w:1}, function(err) {
 			
 			return res.send();
 		});
@@ -51,15 +51,15 @@ app.post('/meows', function(req, res, next){
 
 });
 
-app.put('/meows/remove', function(req, res, next){
+app.put('/tweets/remove', function(req, res, next){
 
 	var token = req.headers.authorization;
 	var user = jwt.decode(token, JWT_SECRET);
 
-	db.collection('meows', function(err, meowsCollection){
-		var meowId = req.body.meow._id;
+	db.collection('tweets', function(err, meowsCollection){
+		var tweetId = req.body.meow._id;
  
-		meowsCollection.remove({_id: ObjectId(meowId), user: user._id}, {w:1}, function(err) {
+		meowsCollection.remove({_id: ObjectId(tweetId), user: user._id}, {w:1}, function(err) {
 			
 			return res.send();
 		});
