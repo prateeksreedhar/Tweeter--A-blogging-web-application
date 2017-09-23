@@ -21,17 +21,17 @@
 		</div>
 	</div>
 	<div class="col-md-8 border-left" ng-show="currentUser">
-		<div class="new-meow">
-			<input type="text" class="form-control" ng-model="newMeow" placeholder="What do you have to meow today?">
+		<div class="new-tweet">
+			<input type="text" class="form-control" ng-model="newTweet" placeholder="What do you have to tweet today?">
 			<br>
-			<button class="btn" type="button" ng-click="submitNewMeow()">Submit</button>{{ newMeow }}
+			<button class="btn" type="button" ng-click="submitNewTweet()">Submit</button>{{ newTweet }}
 		</div>
-		<h3 ng-repeat = "meow in meows">
+		<h3 ng-repeat = "tweet in tweets">
 			<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 			{{ meow.text }}	
-			<a href ng-click="removeMeow(meow)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+			<a href ng-click="removeTweet(tweet)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
 			<br>
-			<small>{{ meow.username }}</small>
+			<small>{{ tweet.username }}</small>
 		</h3>
 	</div>
 </div>
