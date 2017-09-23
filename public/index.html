@@ -1,4 +1,4 @@
-<html ng-app="mittens">
+<html ng-app="tweeter">
 
 	<head>
 		<title> Tweeter </title>
@@ -8,7 +8,7 @@
 		<script type="text/javascript" src="angular-route.js"></script>
 		<script type="text/javascript" src="angular-cookies.js"></script>
 		<script type="text/javascript">
-			var app = angular.module('mittens', ['ngRoute', 'ngCookies']);
+			var app = angular.module('tweeter', ['ngRoute', 'ngCookies']);
 
 			//something you have to do for ngRoute
 			app.config(function($routeProvider, $locationProvider){
@@ -34,24 +34,24 @@
 
 			app.controller('HomeController', function ($rootScope, $scope, $http, $cookies) {
 
-				$scope.submitNewMeow = function() {
+				$scope.submitNewTweet = function() {
 					console.log($rootScope.token);
-					$http.post('/meows', 
-						{newMeow: $scope.newMeow}, 
+					$http.post('/tweets', 
+						{newTweet: $scope.newTweet}, 
 						{headers: {
 							'Authorization': $rootScope.token
 					}}).then(function(){
-						getMeows();
-						$scope.newMeow = '';
+						getTweets();
+						$scope.newTweets = '';
 					}); 
 				}; 
 
-				$scope.removeMeow = function(meow){
-					$http.put('/meows/remove', {meow: meow}, 
+				$scope.removeTweet = function(tweet){
+					$http.put('/tweets/remove', {tweet: tweet}, 
 						{headers: {
 							'Authorization': $rootScope.token
 					}}).then(function() {
-						getMeows();
+						getTweets();
 					});
 				};
 
@@ -73,15 +73,15 @@
 					$rootScope.currentUser = null;
 				};
 
-				function getMeows(){
-					$http.get('/meows').then(function(response) {
+				function getTweets(){
+					$http.get('/tweets').then(function(response) {
 
-						$scope.meows = response.data;
+						$scope.tweets = response.data;
 
 					});	
 				}
 
-				getMeows();
+				getTweets();
  				
 			});
 
