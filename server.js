@@ -85,6 +85,7 @@ app.post('/users', function(req, res, next){
 	});
 });
 
+//Sign In 
 app.put('/users/signin', function(req, res, next){
 
 	db.collection('users', function(err, usersCollection){
