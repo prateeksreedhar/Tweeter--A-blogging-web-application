@@ -22,10 +22,10 @@ app.use(bodyParser.json());
 
 app.get('/tweets', function(req, res, next){
 
-	db.collection('tweets', function(err, meowsCollection){
-		tweetsCollection.find().toArray(function(err, meows) {
-			console.log(meows);
-			return res.json(meows);
+	db.collection('tweets', function(err, tweetsCollection){
+		tweetsCollection.find().toArray(function(err, tweets) {
+			console.log(tweets);
+			return res.json(tweets);
 		});
 	});
 });
@@ -36,7 +36,7 @@ app.post('/tweets', function(req, res, next){
 	var user = jwt.decode(token, JWT_SECRET);
 	console.log("token = " + token);
 
-	db.collection('tweets', function(err, meowsCollection){
+	db.collection('tweets', function(err, tweetsCollection){
 		var newTweet = {
 			text: req.body.newMeow,
 			user: user._id,
@@ -56,7 +56,7 @@ app.put('/tweets/remove', function(req, res, next){
 	var token = req.headers.authorization;
 	var user = jwt.decode(token, JWT_SECRET);
 
-	db.collection('tweets', function(err, meowsCollection){
+	db.collection('tweets', function(err, tweetsCollection){
 		var tweetId = req.body.meow._id;
  
 		meowsCollection.remove({_id: ObjectId(tweetId), user: user._id}, {w:1}, function(err) {
