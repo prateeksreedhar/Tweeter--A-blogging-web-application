@@ -38,7 +38,7 @@ app.post('/tweets', function(req, res, next){
 
 	db.collection('tweets', function(err, tweetsCollection){
 		var newTweet = {
-			text: req.body.newMeow,
+			text: req.body.newTweet,
 			user: user._id,
 			username: user.username
 		};
@@ -57,7 +57,7 @@ app.put('/tweets/remove', function(req, res, next){
 	var user = jwt.decode(token, JWT_SECRET);
 
 	db.collection('tweets', function(err, tweetsCollection){
-		var tweetId = req.body.meow._id;
+		var tweetId = req.body.tweet._id;
  
 		meowsCollection.remove({_id: ObjectId(tweetId), user: user._id}, {w:1}, function(err) {
 			
